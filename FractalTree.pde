@@ -10,6 +10,10 @@ public void setup()
 } 
 public void draw() 
 {   
+	if(up){if(branchAngle2 > .35){branchAngle2 -= 0.015;}}
+	if(down){if(branchAngle2 < 3){branchAngle2 += 0.015;}}
+	if(s){if(branchAngle1 < 3){branchAngle1 += 0.015;}}
+	if(w){if(branchAngle1 > .35){branchAngle1 -= 0.015;}}
 	background(0);   
 	stroke(0,255,0);   
 	line(300,480,300,380);   
@@ -18,21 +22,57 @@ public void draw()
 	drawBranches(900,380,100,3*Math.PI/2,branchAngle2); 
 }
 
-public void mouseWheel(MouseEvent event)
+boolean up = false;
+boolean down = false;
+boolean w = false;
+boolean s = false;
+public void keyPressed()
 {
-	float e = event.getCount();
-	if(e > 0)
+	if(key == CODED)
 	{
-		if(mouseX < 600 && branchAngle1 < 3){branchAngle1 += 0.015;}
-		else if(mouseX > 600 && branchAngle2 < 3){branchAngle2 += 0.015;}
+		if(keyCode == UP)
+		{
+			up = true;
+		}
+		if(keyCode == DOWN)
+		{
+			down = true;
+		}
 	}
-	if(e < 0)
+	if(key == 'w')
 	{
-		if(mouseX < 600 && branchAngle1 > .35){branchAngle1 -= 0.015;}
-		else if(mouseX > 600 && branchAngle2 > .35){branchAngle2 -= 0.015;}
+		w = true;
 	}
+	if(key == 's')
+	{
+		s = true;
+	}
+
 }
 
+public void keyReleased()
+{
+
+	if(key == CODED)
+	{
+		if(keyCode == UP)
+		{
+			up = false;
+		}
+		if(keyCode == DOWN)
+		{
+			down = false;
+		}
+	}
+	if(key == 'w')
+	{
+		w = false;
+	}
+	if(key == 's')
+	{
+		s = false;
+	}
+}
 
 public void drawBranches(int x,int y, double branchLength, double angle, double branchAngle) 
 {   
@@ -56,6 +96,4 @@ public void drawBranches(int x,int y, double branchLength, double angle, double 
 		line(x,y,endX2, endY2);
 		
 	}
-	
-
 } 
